@@ -450,7 +450,14 @@ let cubeRender = (function cubeRender() {
                 .on('touchend', end);
 
             //点击 魔方每一个面进入对应的detail页面
-            detailRender.init();
+             //=>点击每一个面跳转到详情区域对应的页面
+             $cubeList.tap(function () {
+                $cubeBox.css('display', 'none');
+
+                //=>跳转到详情区域,通过传递点击LI的索引,让其定位到具体的SLIDE
+                let index = $(this).index();
+                detailRender.init(index);
+            });
         }
     }
 })();
@@ -530,9 +537,15 @@ let detailRender = (function () {
 
     return {
         init: function () {
+            // $detailBox.css('display', 'block');
+            // //初始换swiper插件
+            // swiperInit();
             $detailBox.css('display', 'block');
-            //初始换swiper插件
-            swiperInit();
+            if (!swiper) {
+                //=>防止重复初始化
+                swiperInit();
+            }
+            swiper.slideTo(index, 0);//=>直接运动到具体的SLIDE页面(第二个参数是切换的速度：0立即切换没有切换的动画效果)
 
 
         }
