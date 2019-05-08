@@ -2,7 +2,7 @@ let loadingRender = (function () {
     let $loadingBox = $('.loadingBox');
     //$loadingBox.css('display','block');
     let $current = $loadingBox.find('.current');
-    let imgData = ["img/icon.png",  "img/zf_teacher3.jpg", "img/zf_teacher4.png", "img/zf_teacher5.png", "img/zf_teacher6.png", "img/zf_teacherTip.png"];
+    let imgData = ["img/icon.png",  "img/zf_teacher3.jpg", "img/zf_teacher4.png", "img/zf_teacher5.png", "img/zf_teacher6.png"];
 
     //run=> 预先加载图片
     let n = 0; //已经加载的图片个数
@@ -39,7 +39,7 @@ let loadingRender = (function () {
     let delayTimer = null;
     let maxDelay = function maxDelay(callback) {
         delayTimer = setTimeout(() => {
-            if (n / len >= 0.9) {
+            if (n / len >= 0.3) {
                 //没有加载完，但是不能让用户知道，所以立马让进度条跳到100%
                 $current.css('width', '100%');
                 callback && callback();
