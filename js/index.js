@@ -48,7 +48,7 @@ let loadingRender = (function () {
             alert("当前网络不佳，请投诉运营商");
             //这样写，超时后还会执行下边的操作，移除lodingBox，我们可以让其跳转到其他页面
             window.location.href = "https://github.com/BigSpinach";
-        }, 10000);
+        }, 100000);
     }
 
     //DONE 完成（就是把loadingBox移除）
