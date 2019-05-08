@@ -39,7 +39,8 @@ let loadingRender = (function () {
     let delayTimer = null;
     let maxDelay = function maxDelay(callback) {
         delayTimer = setTimeout(() => {
-            if (n / len >= 0.3) {
+            //if (n / len >= 0.3) {
+			if (true) {
                 //没有加载完，但是不能让用户知道，所以立马让进度条跳到100%
                 $current.css('width', '100%');
                 callback && callback();
