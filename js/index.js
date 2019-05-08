@@ -528,15 +528,10 @@ let detailRender = (function () {
                 item.id=null;
             
         });
-        
-       
-
-       
-
     };
 
     return {
-        init: function () {
+        init: function (index = 0) {
             // $detailBox.css('display', 'block');
             // //初始换swiper插件
             // swiperInit();
@@ -550,7 +545,13 @@ let detailRender = (function () {
 
         }
     }
+  
 })();
+
+/*以后在真实的项目中，如果页面中有滑动的需求，我们一定要把DOCUMENT本身滑动的默认行为阻止掉（不阻止：浏览器中预览，会触发下拉刷新或者左右滑动切换页卡等功能）*/
+$(document).on('touchstart touchmove touchend', (ev) => {
+    ev.preventDefault();
+});
 
 
 
