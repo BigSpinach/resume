@@ -40,12 +40,12 @@ let loadingRender = (function () {
     let maxDelay = function maxDelay(callback) {
         delayTimer = setTimeout(() => {
             //if (n / len >= 0.3) {
-			if (true) {
+			//if (true) {
                 //没有加载完，但是不能让用户知道，所以立马让进度条跳到100%
                 $current.css('width', '100%');
                 callback && callback();
                 return;
-            }
+            //}
             alert("当前网络不佳，请投诉运营商");
             //这样写，超时后还会执行下边的操作，移除lodingBox，我们可以让其跳转到其他页面
             window.location.href = "https://github.com/BigSpinach";
