@@ -2,7 +2,7 @@ let loadingRender = (function () {
     let $loadingBox = $('.loadingBox');
     //$loadingBox.css('display','block');
     let $current = $loadingBox.find('.current');
-    let imgData = ["img/icon.png",  "img/zf_teacher3.jpg", "img/zf_teacher4.png", "img/zf_teacher5.png", "img/zf_teacher6.png"];
+    let imgData = ["img/icon.png"];
 
     //run=> 预先加载图片
     let n = 0; //已经加载的图片个数
@@ -39,17 +39,16 @@ let loadingRender = (function () {
     let delayTimer = null;
     let maxDelay = function maxDelay(callback) {
         delayTimer = setTimeout(() => {
-            //if (n / len >= 0.3) {
-			//if (true) {
+            if (n / len >= 0.9) {
                 //没有加载完，但是不能让用户知道，所以立马让进度条跳到100%
                 $current.css('width', '100%');
                 callback && callback();
                 return;
-            //}
+            }
             alert("当前网络不佳，请投诉运营商");
             //这样写，超时后还会执行下边的操作，移除lodingBox，我们可以让其跳转到其他页面
             window.location.href = "https://github.com/BigSpinach";
-        }, 100000);
+        }, 10000);
     }
 
     //DONE 完成（就是把loadingBox移除）
@@ -450,12 +449,10 @@ let cubeRender = (function cubeRender() {
                 .on('touchend', end);
 
             //点击 魔方每一个面进入对应的detail页面
-             //=>点击每一个面跳转到详情区域对应的页面
-             $cubeList.tap(function () {
+            $cubeList.tap(function () {
                 $cubeBox.css('display', 'none');
-
-                //=>跳转到详情区域,通过传递点击LI的索引,让其定位到具体的SLIDE
                 let index = $(this).index();
+                console.log(index);
                 detailRender.init(index);
             });
         }
@@ -488,18 +485,20 @@ let detailRender = (function () {
                     transitionEnd: move,
                 }
             });
+
+
     };
 
     let move = function move() {
-        
+
         //=> this:表示的是当前的swiper实例（swiper 4.0版本）
 
         //1. 判断当前slide是否是第一个slide，如果是,就让他3d展开，不是就收起3D菜单
 
         let activeIn = this.activeIndex;
-        let slideAry = Array.prototype.slice.call(this.slides,0);
-        
-        if (activeIn === 0) {           
+        let slideAry = Array.prototype.slice.call(this.slides, 0);
+
+        if (activeIn === 0) {
             //实现折叠效果
             $dl.makisu({
                 selector: 'dd',
@@ -520,38 +519,28 @@ let detailRender = (function () {
 
         //2.根据index，判断当前是哪个页面需要有id样式动画
         //滑动到哪个页面，给哪个页面设置id选择器（这个id选择器里有我们搞的css3动画）
-        slideAry.forEach((item,index)=>{
-            if(activeIn===index){
+        slideAry.forEach((item, index) => {
+            if (activeIn === index) {
                 item.id = `page${index+1}`;
                 return;
             }
-                item.id=null;
-            
+            item.id = null;
         });
     };
 
     return {
-        init: function (index = 0) {
-            // $detailBox.css('display', 'block');
-            // //初始换swiper插件
-            // swiperInit();
+        init: function (index=0) {
             $detailBox.css('display', 'block');
+            //初始换swiper插件
             if (!swiper) {
-                //=>防止重复初始化
+                //防止重复初始化swiper实例
                 swiperInit();
             }
-            swiper.slideTo(index, 0);//=>直接运动到具体的SLIDE页面(第二个参数是切换的速度：0立即切换没有切换的动画效果)
 
-
+            swiper.slideTo(index,0);//直接让页面切换到指定屏，0表示没有动画时间，立即切换
         }
     }
-  
 })();
-
-/*以后在真实的项目中，如果页面中有滑动的需求，我们一定要把DOCUMENT本身滑动的默认行为阻止掉（不阻止：浏览器中预览，会触发下拉刷新或者左右滑动切换页卡等功能）*/
-$(document).on('touchstart touchmove touchend', (ev) => {
-    ev.preventDefault();
-});
 
 
 
